@@ -16,6 +16,7 @@ public abstract class Fighter extends Element {
 	private int weaponDamage;
 	private int weaponStyle;
 	private double speedX, speedY;
+	private double moveSpeed;
 	private boolean allowFire = false;
 	private Timer refireRate = new Timer(300); // allow to refire after 300 ms
 												// (default)
@@ -46,16 +47,16 @@ public abstract class Fighter extends Element {
 		speedY = this.getVerticalSpeed();
 		switch (key) {
 		case UP:
-			speedY = -0.3;
+			speedY = -moveSpeed;
 			break;
 		case DOWN:
-			speedY = 0.3;
+			speedY = moveSpeed;
 			break;
 		case LEFT:
-			speedX = -0.3;
+			speedX = -moveSpeed;
 			break;
 		case RIGHT:
-			speedX = 0.3;
+			speedX = moveSpeed;
 			break;
 		}
 
