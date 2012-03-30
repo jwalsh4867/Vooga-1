@@ -2,16 +2,14 @@ package element;
 
 import java.awt.image.BufferedImage;
 
-import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.Timer;
 
-public class Fighter extends Sprite {
+public abstract class Fighter extends Element {
 
 	private final int UP = 0;
 	private final int DOWN = 1;
 	private final int LEFT = 2;
 	private final int RIGHT = 3;
-	// private final int FIRE = 4;
 
 	private int healthPoint;
 	private int lifeNum;
@@ -38,11 +36,9 @@ public class Fighter extends Sprite {
 	}
 
 	public void setWeapon(int weaponDamage, int weaponStyle) {
-		
-	}
-
-	public void update(long elapsedTime) {
-		super.update(elapsedTime);
+		//change according to bonus
+		this.weaponDamage = weaponDamage;
+		this.weaponStyle = weaponStyle;
 	}
 
 	public void fighterControl(long elapsedTime, int key) {
@@ -69,19 +65,31 @@ public class Fighter extends Sprite {
 	}
 
 	public void fire(long elapsedTime) {
-		// try to fire when space key pressed
 		if (allowFire == false) {
 			allowFire = refireRate.action(elapsedTime);
 		}
 		if (allowFire) {
-			Weapon missile = new Weapon(bulletImage, weaponDamage, weaponStyle);
-			// three levels of ammunition
-			missile.fire();
+			Bullet missile = new Bullet(bulletImage);
+			//here we also need to add missile to playfield, haven't done yet 
+			setBullet();
 		}
 	}
 
 	public void setRefireRate(int rate) {
 		refireRate = new Timer(rate);
 	}
+	
+	public void setBackgroundSpeed(double backgroundSpeed) {
+		this.backgroundSpeed = backgroundSpeed;
+	}
 
+	public void setBulletImage(BufferedImage bulletImage) {
+		this.bulletImage = bulletImage;
+	}
+	
+	public abstract void setBullet(); //here developer should set their bullet style
+	
+	public void death(BufferedImage i){
+		this.setImage(i);
+	}
 }
